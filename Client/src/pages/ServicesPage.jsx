@@ -87,46 +87,46 @@ const ServicesPage = () => {
 
   const testimonials = [
     {
-      name: "John Anderson",
+      name: "Bihari Kumar Rawat",
       company: "Verified Buyer",
       text: "MallVerse transformed the way I shop. Their electronics collection is top-notch and delivery was incredibly fast!",
       rating: 5,
-      img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80"
+      img: "/image/bihari-kumar-rawat-profile-photo.jpeg"
     },
     {
-      name: "Sarah Johnson",
+      name: "Bihari Kumar Rawat",
       company: "Verified Buyer",
       text: "I buy all my groceries from here now. The produce is always fresh, and the prices are unbeatable.",
       rating: 5,
-      img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"
+      img: "/image/bihari-kumar-rawat-web-developer.jpeg"
     },
     {
       name: "Mike Chen",
       company: "Verified Buyer",
       text: "Outstanding customer support! I had an issue with a watch I ordered and they replaced it the next day.",
       rating: 5,
-      img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+      img: "/image/bihari-kumar-rawat.jpeg"
     },
     {
-      name: "Emily Davis",
+      name: "Bihari Kumar Rawat",
       company: "Verified Buyer",
       text: "The clothing collection is amazing. The quality is far better than what I expected for the price.",
       rating: 5,
-      img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=150&q=80"
+      img: "/image/bihari-kumar-rawat1.jpeg"
     },
     {
-      name: "David Smith",
+      name: "Bihari Kumar Rawat",
       company: "Verified Buyer",
       text: "Fastest shipping I have ever experienced. My new sneakers arrived in less than 24 hours. Highly recommend!",
       rating: 5,
-      img: "https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?auto=format&fit=crop&w=150&q=80"
+      img: "/image/bihari-kumar-rawat2.jpeg"
     },
     {
-      name: "Jessica Taylor",
+      name: "Bihari Kumar Rawat",
       company: "Verified Buyer",
       text: "Their perfume selection is authentic and reasonably priced. I'm definitely going to be a returning customer.",
       rating: 5,
-      img: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&q=80"
+      img: "/image/bihari-kumar-rawat3.jpeg"
     }
   ];
 
@@ -399,40 +399,53 @@ const ServicesPage = () => {
                     background: "rgba(255,255,255,0.1)",
                     backdropFilter: "blur(10px)",
                     borderRadius: "20px",
-                    padding: "30px",
+                    padding: "40px 30px",
                     border: "1px solid rgba(255,255,255,0.2)",
-                    transition: "all 0.3s"
+                    transition: "all 0.3s",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    textAlign: "center"
                   }}
                 >
+                  <img 
+                    src={testimonial.img} 
+                    alt={testimonial.name}
+                    style={{
+                      width: "120px",
+                      height: "120px",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                      border: "4px solid rgba(255,255,255,0.4)",
+                      marginBottom: "20px",
+                      boxShadow: "0 10px 20px rgba(0,0,0,0.2)"
+                    }} 
+                  />
+                  
+                  <div style={{ marginBottom: "15px" }}>
+                    <p style={{ margin: "0", fontWeight: "800", color: "white", fontSize: "1.2rem" }}>
+                      {testimonial.name}
+                    </p>
+                    <p style={{ margin: "0", fontSize: "0.95rem", color: "rgba(255,255,255,0.7)" }}>
+                      {testimonial.company}
+                    </p>
+                  </div>
+
                   <div style={{ marginBottom: "20px" }}>
                     {[...Array(testimonial.rating)].map((_, idx) => (
-                      <span key={idx} style={{ fontSize: "20px", color: "#fbbf24" }}>⭐</span>
+                      <span key={idx} style={{ fontSize: "18px", color: "#fbbf24", margin: "0 2px" }}>⭐</span>
                     ))}
                   </div>
-                  <p style={{ color: "rgba(255,255,255,0.9)", lineHeight: "1.7", marginBottom: "20px", minHeight: "80px" }}>
+
+                  <p style={{ 
+                    color: "rgba(255,255,255,0.95)", 
+                    lineHeight: "1.8", 
+                    margin: "0",
+                    fontSize: "1.05rem",
+                    fontStyle: "italic" 
+                  }}>
                     "{testimonial.text}"
                   </p>
-                  <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
-                    <img 
-                      src={testimonial.img} 
-                      alt={testimonial.name}
-                      style={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "50%",
-                        objectFit: "cover",
-                        border: "2px solid rgba(255,255,255,0.3)"
-                      }} 
-                    />
-                    <div>
-                      <p style={{ margin: "0", fontWeight: "700", color: "white" }}>
-                        {testimonial.name}
-                      </p>
-                      <p style={{ margin: "0", fontSize: "0.9rem", color: "rgba(255,255,255,0.7)" }}>
-                        {testimonial.company}
-                      </p>
-                    </div>
-                  </div>
                 </Card>
               </div>
             ))}
