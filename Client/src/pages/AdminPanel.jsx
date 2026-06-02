@@ -5,9 +5,9 @@ import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
-const API_URL = "http://localhost:5000/api/products";
-const CATEGORY_URL = "http://localhost:5000/api/categories";
-const ORDERS_URL = "http://localhost:5000/api/orders";
+const API_URL = `${import.meta.env.VITE_API_URL}/api/products`;
+const CATEGORY_URL = `${import.meta.env.VITE_API_URL}/api/categories`;
+const ORDERS_URL = `${import.meta.env.VITE_API_URL}/api/orders`;
 
 function AdminPanel() {
   const { isAdmin, isLoggedIn, user } = useContext(AuthContext);

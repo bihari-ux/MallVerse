@@ -5,10 +5,10 @@ import { AuthContext } from "../context/AuthContext";
 import useSEO from "../hooks/useSEO";
 import "react-toastify/dist/ReactToastify.css";
 
-const API_URL = "http://localhost:5000/api/products";
-const CART_URL = "http://localhost:5000/api/cart";
-const WISHLIST_URL = "http://localhost:5000/api/wishlist";
-const CATEGORIES_URL = "http://localhost:5000/api/categories";
+const API_URL = `${import.meta.env.VITE_API_URL}/api/products`;
+const CART_URL = `${import.meta.env.VITE_API_URL}/api/cart`;
+const WISHLIST_URL = `${import.meta.env.VITE_API_URL}/api/wishlist`;
+const CATEGORIES_URL = `${import.meta.env.VITE_API_URL}/api/categories`;
 
 function ProductPage() {
   const { isLoggedIn, user } = useContext(AuthContext);

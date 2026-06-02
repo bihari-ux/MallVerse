@@ -42,7 +42,7 @@ const ProfilePage = () => {
 
   const fetchAddresses = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/addresses", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/addresses`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       const data = await res.json();
@@ -54,7 +54,7 @@ const ProfilePage = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/orders/myorders", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/orders/myorders`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
       const data = await res.json();
@@ -70,7 +70,7 @@ const ProfilePage = () => {
       return toast.error("Passwords do not match");
     }
     try {
-      const res = await fetch("http://localhost:5000/api/auth/profile", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -95,7 +95,7 @@ const ProfilePage = () => {
   const handleAddAddress = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:5000/api/addresses", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/addresses`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

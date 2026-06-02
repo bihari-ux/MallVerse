@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import useSEO from "../hooks/useSEO";
 import "react-toastify/dist/ReactToastify.css";
 
-const CART_URL = "http://localhost:5000/api/cart";
+const CART_URL = `${import.meta.env.VITE_API_URL}/api/cart`;
 
 function CartPage() {
   const { isLoggedIn, user } = useContext(AuthContext);

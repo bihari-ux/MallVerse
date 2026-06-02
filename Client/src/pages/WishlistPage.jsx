@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import useSEO from "../hooks/useSEO";
 import "react-toastify/dist/ReactToastify.css";
 
-const WISHLIST_URL = "http://localhost:5000/api/wishlist";
-const CART_URL = "http://localhost:5000/api/cart";
+const WISHLIST_URL = `${import.meta.env.VITE_API_URL}/api/wishlist`;
+const CART_URL = `${import.meta.env.VITE_API_URL}/api/cart`;
 
 function WishlistPage() {
   const { isLoggedIn, user } = useContext(AuthContext);

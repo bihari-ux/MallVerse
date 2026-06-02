@@ -29,7 +29,7 @@ const HomePage = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/products");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/products`);
       const data = await res.json();
       // Fetch some premium products for the showcase
       setProducts((data.products || []).slice(0, 4));
