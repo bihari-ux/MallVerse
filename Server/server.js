@@ -92,13 +92,27 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174", "http://127.0.0.1:5173", "http://127.0.0.1:5174"];
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://127.0.0.1:5173",
+  "http://127.0.0.1:5174",
+  "https://mallverse-6.onrender.com"
+];
 app.use(
   cors({
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) !== -1) callback(null, true);
-      else callback(new Error("CORS policy: Origin not allowed"));
+      // Allow any Vercel or Render deployment dynamically for convenience, plus local
+      if (
+        allowedOrigins.indexOf(origin) !== -1 ||
+        origin.endsWith(".vercel.app") ||
+        origin.endsWith(".onrender.com")
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error("CORS policy: Origin not allowed"));
+      }
     },
     credentials: true,
   })
