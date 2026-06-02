@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignupPage";
+import SignUpPage from "./pages/SignUpPage";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
