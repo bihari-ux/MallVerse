@@ -33,7 +33,22 @@ export const getProducts = async (req, res) => {
     }
 
     const products = await Product.find({ ...keyword, ...category, ...priceFilter, ...ratingFilter }).sort(sort).populate("category", "name");
-    res.json({ products });
+    
+    const currentHost = `${req.protocol}://${req.get("host")}`;
+    const fixedProducts = products.map(p => {
+      const productObj = p.toObject();
+      if (productObj.imageUrl) {
+        // Replace any localhost or 127.0.0.1 with any port
+        if (productObj.imageUrl.match(/^http:\/\/(localhost|127\.0\.0\.1):\d+/)) {
+          productObj.imageUrl = productObj.imageUrl.replace(/^http:\/\/(localhost|127\.0\.0\.1):\d+/, currentHost);
+        } else if (productObj.imageUrl.startsWith("/uploads")) {
+          productObj.imageUrl = `${currentHost}${productObj.imageUrl}`;
+        }
+      }
+      return productObj;
+    });
+
+    res.json({ products: fixedProducts });
   } catch (err) {
     console.error("Fetch products error:", err);
     res.status(500).json({ message: "Server error" });
@@ -46,7 +61,7 @@ export const createProduct = async (req, res) => {
 
     if (!name || !price) return res.status(400).json({ message: "Name and price are required" });
 
-    const imageUrl = req.file ? `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}` : null;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
     const newProduct = new Product({ 
       name, 
@@ -58,7 +73,14 @@ export const createProduct = async (req, res) => {
       countInStock: countInStock ? Number(countInStock) : 0
     });
     await newProduct.save();
-    res.status(201).json({ product: newProduct });
+
+    const productObj = newProduct.toObject();
+    const currentHost = `${req.protocol}://${req.get("host")}`;
+    if (productObj.imageUrl && productObj.imageUrl.startsWith("/uploads")) {
+      productObj.imageUrl = `${currentHost}${productObj.imageUrl}`;
+    }
+
+    res.status(201).json({ product: productObj });
   } catch (err) {
     console.error("Create product error:", err);
     res.status(500).json({ message: "Server error" });
@@ -81,11 +103,22 @@ export const updateProduct = async (req, res) => {
     if (countInStock !== undefined) product.countInStock = Number(countInStock);
 
     if (req.file) {
-      product.imageUrl = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+      product.imageUrl = `/uploads/${req.file.filename}`;
     }
 
     await product.save();
-    res.json({ product });
+
+    const productObj = product.toObject();
+    const currentHost = `${req.protocol}://${req.get("host")}`;
+    if (productObj.imageUrl && productObj.imageUrl.includes("localhost:5000")) {
+      productObj.imageUrl = productObj.imageUrl.replace("http://localhost:5000", currentHost);
+    } else if (productObj.imageUrl && productObj.imageUrl.includes("127.0.0.1:5000")) {
+      productObj.imageUrl = productObj.imageUrl.replace("http://127.0.0.1:5000", currentHost);
+    } else if (productObj.imageUrl && productObj.imageUrl.startsWith("/uploads")) {
+      productObj.imageUrl = `${currentHost}${productObj.imageUrl}`;
+    }
+
+    res.json({ product: productObj });
   } catch (err) {
     console.error("Update product error:", err);
     res.status(500).json({ message: "Server error" });
