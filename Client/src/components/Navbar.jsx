@@ -14,7 +14,7 @@ const CustomNavbar = () => {
       <Container fluid className="px-4">
         {/* Logo/Brand */}
         <Navbar.Brand as={Link} to="/" className="fw-bold text-primary fs-3 d-flex align-items-center">
-          <img src="/image/mallverse.png" alt="MallVerse Logo" style={{ height: "40px", objectFit: "contain", marginRight: "10px" }} />
+          <img src="/image/mallverse.png" alt="MallVerse Logo" style={{ height: "40px", objectFit: "contain", marginRight: "20px", transform: "scale(1.8)", transformOrigin: "left center" }} />
         </Navbar.Brand>
 
         {/* Hamburger toggle button for mobile */}
