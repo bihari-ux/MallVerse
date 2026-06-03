@@ -1,11 +1,27 @@
 import Cart from "../models/Cart.js";
 
+const fixCartUrls = (cartDoc, req) => {
+  if (!cartDoc) return [];
+  const currentHost = `${req.protocol}://${req.get("host")}`;
+  const obj = cartDoc.toObject();
+  obj.items.forEach(i => {
+    if (i.productId && i.productId.imageUrl) {
+      if (i.productId.imageUrl.match(/^http:\/\/(localhost|127\.0\.0\.1):\d+/)) {
+        i.productId.imageUrl = i.productId.imageUrl.replace(/^http:\/\/(localhost|127\.0\.0\.1):\d+/, currentHost);
+      } else if (i.productId.imageUrl.startsWith("/uploads")) {
+        i.productId.imageUrl = `${currentHost}${i.productId.imageUrl}`;
+      }
+    }
+  });
+  return obj.items;
+};
+
 // Get cart for a user
 export const getCart = async (req, res) => {
   try {
     const { userId } = req.params;
     const cart = await Cart.findOne({ userId }).populate("items.productId");
-    res.json({ items: cart ? cart.items : [] });
+    res.json({ items: fixCartUrls(cart, req) });
   } catch (err) {
     console.error("Get cart error:", err);
     res.status(500).json({ message: "Server error" });
@@ -31,7 +47,7 @@ export const addToCart = async (req, res) => {
 
     await cart.save();
     const updated = await Cart.findOne({ userId }).populate("items.productId");
-    res.json({ items: updated.items });
+    res.json({ items: fixCartUrls(updated, req) });
   } catch (err) {
     console.error("Add to cart error:", err);
     res.status(500).json({ message: "Server error" });
@@ -56,7 +72,7 @@ export const updateQuantity = async (req, res) => {
 
     await cart.save();
     const updated = await Cart.findOne({ userId }).populate("items.productId");
-    res.json({ items: updated.items });
+    res.json({ items: fixCartUrls(updated, req) });
   } catch (err) {
     console.error("Update quantity error:", err);
     res.status(500).json({ message: "Server error" });
@@ -73,7 +89,7 @@ export const removeFromCart = async (req, res) => {
     cart.items = cart.items.filter((i) => i.productId.toString() !== productId);
     await cart.save();
     const updated = await Cart.findOne({ userId }).populate("items.productId");
-    res.json({ items: updated.items });
+    res.json({ items: fixCartUrls(updated, req) });
   } catch (err) {
     console.error("Remove from cart error:", err);
     res.status(500).json({ message: "Server error" });

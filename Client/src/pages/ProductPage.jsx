@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Container, Button, Card, Row, Col, Badge, Form, InputGroup } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import useSEO from "../hooks/useSEO";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -11,6 +12,7 @@ const WISHLIST_URL = `${import.meta.env.VITE_API_URL}/api/wishlist`;
 const CATEGORIES_URL = `${import.meta.env.VITE_API_URL}/api/categories`;
 
 function ProductPage() {
+  const navigate = useNavigate();
   const { isLoggedIn, user } = useContext(AuthContext);
   const [allProducts, setAllProducts] = useState([]);
   const [displayedProducts, setDisplayedProducts] = useState([]);
@@ -114,6 +116,7 @@ function ProductPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to add to cart");
       toast.success("Added to cart! ");
+      setTimeout(() => navigate("/cart"), 1000);
     } catch (err) {
       console.error("Add to cart error:", err);
       toast.error(err.message || "Failed to add to cart");

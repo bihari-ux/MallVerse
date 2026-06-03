@@ -61,7 +61,7 @@ export const createProduct = async (req, res) => {
 
     if (!name || !price) return res.status(400).json({ message: "Name and price are required" });
 
-    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+    const imageUrl = req.file ? req.file.path : null;
 
     const newProduct = new Product({ 
       name, 
@@ -103,7 +103,7 @@ export const updateProduct = async (req, res) => {
     if (countInStock !== undefined) product.countInStock = Number(countInStock);
 
     if (req.file) {
-      product.imageUrl = `/uploads/${req.file.filename}`;
+      product.imageUrl = req.file.path;
     }
 
     await product.save();
