@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Container, Table, Button, Badge } from "react-bootstrap";
+import { Container, Table, Button, Badge, Row, Col } from "react-bootstrap";
 import { ToastContainer, toast } from "react-toastify";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
