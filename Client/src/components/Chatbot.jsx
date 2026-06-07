@@ -25,7 +25,7 @@ const Chatbot = () => {
   const sendMessage = async (messageText) => {
     try {
       const response = await fetch(
-        "https://n8n-latest-oztq.onrender.com",
+        "https://n8n-latest-oztq.onrender.com/webhook/308c52db-0477-4fad-8abf-c138df173a64",
         {
           method: "POST",
           headers: {
